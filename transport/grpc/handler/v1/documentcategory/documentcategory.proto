@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package micro.transport.grpc.handler.v1.documentcategory;
+
+option go_package = "transport/grpc/handler/v1/documentcategory";
+
+message DocumentCategoryMeta {
+  int32 page = 1;
+  int32 per_page = 2;
+  int32 total = 3;
+}
+
+message DocumentCategoryParameterRequest {
+  int32 page = 1;
+  int32 per_page = 2;
+  string order_by = 3;
+  string order_method = 4;
+  string search_condition = 5;
+  string equal = 6;
+  string not = 7;
+  string like = 8;
+  string date_range_by = 9;
+  string date_start = 10;
+  string date_end = 11;
+}
+
+message DocumentCategory {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  double size = 4;
+  string mime_types = 5;
+  string desc = 6;
+  string created_at = 7;
+}
+
+message DocumentCategoryDeleted {
+  string deleted_at = 1;
+}
+
+message DocumentCategories {
+  repeated DocumentCategory data = 5;
+  DocumentCategoryMeta meta = 1;
+}
+
+message FindDocumentCategoryRequest {
+  string id = 1;
+}
+
+message FindDocumentCategoryBySlugRequest {
+  string slug = 1;
+}
+
+message GetDocumentCategoriesRequest {
+  DocumentCategoryParameterRequest parameters = 1;
+}
+
+message SaveDocumentCategoryRequest {
+  string slug = 1;
+  string name = 2;
+  double size = 3;
+  string mime_types = 4;
+  string description = 5;
+}
+
+message UpdateDocumentCategoryRequest {
+  string id = 1;
+  string slug = 2;
+  string name = 3;
+  double size = 4;
+  string mime_types = 5;
+  string description = 6;
+}
+
+message DeleteDocumentCategoryRequest {
+  string id = 1;
+}
+
+service DocumentCategoryService {
+  rpc DeleteDocumentCategory(DeleteDocumentCategoryRequest) returns(DocumentCategoryDeleted);
+  rpc FindDocumentCategory(FindDocumentCategoryRequest) returns(DocumentCategory);
+  rpc FindDocumentCategoryBySlug(FindDocumentCategoryBySlugRequest) returns(DocumentCategory);
+  rpc GetDocumentCategories(GetDocumentCategoriesRequest) returns(DocumentCategories);
+  rpc SaveDocumentCategory(SaveDocumentCategoryRequest) returns(DocumentCategory);
+  rpc UpdateDocumentCategory(UpdateDocumentCategoryRequest) returns(DocumentCategory);
+}

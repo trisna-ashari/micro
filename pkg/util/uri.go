@@ -1,11 +1,10 @@
 package util
 
 import (
+	"errors"
 	"fmt"
 	"net/url"
 	"strings"
-
-	"gitlab.privy.id/carstensz/backend/core/message-bank/exception"
 )
 
 // EncodeQueryString is a function uses to encode query URI to string.
@@ -19,7 +18,7 @@ func EncodeQueryString(query url.Values) string {
 	return encodedQuery
 }
 
-// ValidateURI is a function uses to check the redirect URI is contain domain or not.
+// ValidateURI is a function uses to check the redirect URI is contained domain or not.
 func ValidateURI(baseURI string, redirectURI string) (bool, error) {
 	base, errParseBase := url.Parse(baseURI)
 	if errParseBase != nil {
@@ -32,7 +31,7 @@ func ValidateURI(baseURI string, redirectURI string) (bool, error) {
 	}
 
 	if !strings.HasSuffix(redirect.Host, base.Host) {
-		return false, exception.ErrorTextMiddlewareOauthInvalidRedirectURI
+		return false, errors.New("error.middleware.invalid_redirect_uri")
 	}
 
 	return true, nil

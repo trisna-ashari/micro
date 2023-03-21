@@ -5,6 +5,7 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"micro/cmd"
+	"micro/docs"
 	"micro/domain/registry"
 	"micro/persistence"
 	"micro/pkg/provider/connection"
@@ -89,6 +90,10 @@ func main() {
 	}
 
 	entityRegistry := registry.NewRegistry()
+
+	// Swagger docs
+	docs.SwaggerInfo.Host = os.Getenv("APP_SWAGGER_HOST")
+	docs.SwaggerInfo.BasePath = ""
 
 	app := cmd.NewCli()
 	app.Commands = cmd.NewCommand(

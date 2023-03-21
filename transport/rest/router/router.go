@@ -8,6 +8,7 @@ import (
 	"micro/pkg/logger"
 	"micro/transport/rest/dependency"
 	"micro/transport/rest/handler/ping"
+	"micro/transport/rest/handler/v1/documentcategory/view"
 	"micro/transport/rest/middleware"
 	"net/http"
 	"strings"
@@ -53,13 +54,15 @@ func (r *Router) Init() *gin.Engine {
 	}
 
 	pingHandler := &ping.Handler{Dependency: dep}
+	documentCategory := &view.Handler{Dependency: dep}
 
-	_ = e.Group("/api/v1", func(c *gin.Context) {
+	v1 := e.Group("/api/v1", func(c *gin.Context) {
 		if strings.Contains(c.Request.Referer(), "#") {
 			_ = c.AbortWithError(http.StatusBadRequest, errors.New("common.error.uri_contains_illegal_character"))
 			return
 		}
 	})
+	v1.GET("/document-categories/:id", documentCategory.ViewCategory)
 
 	e.GET("/ping", pingHandler.Ping)
 

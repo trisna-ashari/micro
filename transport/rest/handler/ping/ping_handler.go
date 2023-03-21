@@ -20,14 +20,13 @@ type Handler struct {
 // @Produce application/json
 // @Param Accept-Language header string false "Fill with language code" Enums(en, id) default(id)
 // @Param Set-Request-Id header string false "Fill with request id"
-// @Param Application-Key header string true "Fill with merchant key"
-// @Success 200 {object} response.SuccessOutput{data=ping.Response}
-// @Failure 400 {object} response.ErrorOutput
-// @Failure 401 {object} response.ErrorOutput
-// @Failure 403 {object} response.ErrorOutput
-// @Failure 404 {object} response.ErrorOutput
-// @Failure 422 {object} response.ErrorOutput
-// @Failure 500 {object} response.ErrorOutput
+// @Success 200 {object} presenter.Success{data=ping.Response}
+// @Failure 400 {object} presenter.Error
+// @Failure 401 {object} presenter.Error
+// @Failure 403 {object} presenter.Error
+// @Failure 404 {object} presenter.Error
+// @Failure 422 {object} presenter.Error
+// @Failure 500 {object} presenter.Error
 // @Router /ping [get]
 func (h *Handler) Ping(c *gin.Context) {
 	c.Status(http.StatusOK)

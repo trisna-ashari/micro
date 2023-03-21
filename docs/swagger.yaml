@@ -1,0 +1,155 @@
+definitions:
+  PingResponse:
+    properties:
+      status:
+        type: string
+    type: object
+  presenter.Error:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/presenter.ErrorData'
+        type: array
+      error_code:
+        type: string
+      message:
+        type: string
+    type: object
+  presenter.ErrorData:
+    properties:
+      description:
+        type: string
+      field:
+        type: string
+      quota:
+        type: string
+    type: object
+  presenter.Success:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+      meta: {}
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/document-categories/:id:
+    get:
+      consumes:
+      - application/json
+      description: Document category.
+      parameters:
+      - default: id
+        description: Fill with language code
+        enum:
+        - en
+        - id
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Fill with request id
+        in: header
+        name: Set-Request-Id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/presenter.Success'
+            - properties:
+                data:
+                  $ref: '#/definitions/PingResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/presenter.Error'
+      summary: Uses to find category request
+      tags:
+      - Document Category API
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: ping.
+      parameters:
+      - default: id
+        description: Fill with language code
+        enum:
+        - en
+        - id
+        in: header
+        name: Accept-Language
+        type: string
+      - description: Fill with request id
+        in: header
+        name: Set-Request-Id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/presenter.Success'
+            - properties:
+                data:
+                  $ref: '#/definitions/PingResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/presenter.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/presenter.Error'
+      summary: Uses to ping
+      tags:
+      - Ping API
+swagger: "2.0"

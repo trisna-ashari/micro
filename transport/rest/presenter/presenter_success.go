@@ -33,3 +33,8 @@ func (s *Success) WithMeta(meta interface{}) *Success {
 func (s *Success) JSON() {
 	s.c.JSON(s.Code, s)
 }
+
+// XML return as xml.
+func (s *Success) XML() {
+	s.c.XML(s.Code, s)
+}
